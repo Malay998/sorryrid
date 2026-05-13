@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>what i should've said · for riddhima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg:        #080610;
+    --rose:      #e8a4b8;
+    --rose-dim:  #c97a96;
+    --rose-pale: #f5d0de;
+    --gold:      #c9a76e;
+    --text:      #f0e8ed;
+    --muted:     #7a5d6a;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* simple static background – clean, no animation */
+  .static-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(circle at 30% 20%, #0a061c, #020005 90%);
+  }
+
+  /* veil entrance — subtle, one-time only */
+  .veil {
+    position: fixed;
+    inset: 0;
+    background: #080610;
+    z-index: 9999;
+    pointer-events: none;
+    animation: liftVeil 0.8s ease-out forwards;
+  }
+  @keyframes liftVeil {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* side accents — minimal, static */
+  .side-left {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    z-index: 20;
+    opacity: 0.6;
+  }
+  .side-left .line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--rose-dim), var(--gold), transparent);
+  }
+  .side-left .dot {
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  .side-right {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    writing-mode: vertical-rl;
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: rgba(232,164,184,0.25);
+    z-index: 20;
+  }
+
+  /* main layout */
+  .page {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+  }
+  .container {
+    max-width: 780px;
+    width: 100%;
+  }
+
+  /* navigation */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid rgba(232,164,184,0.25);
+    border-radius: 40px;
+    padding: 0.6rem 1.4rem;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+  .back-btn:hover {
+    border-color: var(--rose);
+    color: var(--rose-pale);
+  }
+  .back-arrow {
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+    position: relative;
+  }
+  .back-arrow::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -4px;
+    width: 7px;
+    height: 7px;
+    border-left: 1.5px solid currentColor;
+    border-top: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+  }
+  .page-tag {
+    font-size: 0.6rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* headline */
+  .headline {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .headline-text {
+    display: block;
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .headline-text.italic {
+    font-style: italic;
+    color: var(--rose-pale);
+  }
+  .headline-sub {
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 1.2rem;
+  }
+
+  /* divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,164,184,0.25), var(--gold), transparent);
+  }
+  .divider-symbol {
+    font-size: 0.65rem;
+    color: var(--rose-dim);
+    letter-spacing: 4px;
+  }
+
+  /* body text */
+  .body-text {
+    font-size: 1rem;
+    font-weight: 450;
+    line-height: 1.9;
+    color: rgba(240,232,237,0.8);
+  }
+  .body-text p {
+    margin-bottom: 1.3rem;
+  }
+  .body-text em {
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--rose-pale);
+  }
+  .body-text strong {
+    color: var(--rose);
+    font-weight: 600;
+  }
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.8rem 0;
+  }
+  .rule-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(232,164,184,0.12);
+  }
+  .rule-dot {
+    width: 3px;
+    height: 3px;
+    background: var(--rose-dim);
+    border-radius: 50%;
+  }
+
+  /* quote block */
+  .quote-block {
+    margin: 2.5rem 0;
+    padding: 1.8rem 2.2rem;
+    background: rgba(12, 8, 28, 0.5);
+    border-left: 2px solid var(--rose);
+    border-radius: 0 24px 24px 0;
+  }
+  .quote-text {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--rose-pale);
+    text-align: center;
+  }
+
+  /* button */
+  .btn-wrapper {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(20, 12, 38, 0.7);
+    border: 1px solid rgba(232,164,184,0.35);
+    padding: 1rem 2.5rem;
+    border-radius: 80px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s ease;
+  }
+  .primary-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(30, 20, 48, 0.8);
+    transform: translateY(-2px);
+  }
+  .btn-arrow {
+    width: 26px;
+    height: 1.5px;
+    background: currentColor;
+    position: relative;
+    transition: width 0.2s ease;
+  }
+  .btn-arrow::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: -4.5px;
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-top: 1.5px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .primary-btn:hover .btn-arrow {
+    width: 38px;
+  }
+
+  /* footnote */
+  .footnote {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7f6070;
+  }
+
+  /* responsive */
+  @media (max-width: 760px) {
+    .side-left, .side-right { display: none; }
+    .page { padding: 3rem 1.2rem; }
+    .primary-btn { width: 100%; justify-content: center; }
+    .quote-block { padding: 1.2rem; }
+  }
+
+  ::-webkit-scrollbar { width: 2px; }
+  ::-webkit-scrollbar-track { background: #080610; }
+  ::-webkit-scrollbar-thumb { background: var(--rose-dim); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="veil"></div>
+<div class="static-bg"></div>
+
+<div class="side-left">
+  <div class="line"></div>
+  <div class="dot"></div>
+  <div class="line"></div>
+</div>
+<div class="side-right">for riddhima · 002</div>
+
+<div class="page">
+  <div class="container">
+
+    <nav class="nav">
+      <a href="index.html" class="back-btn">
+        <span class="back-arrow"></span>
+        <span>go back</span>
+      </a>
+      <span class="page-tag">page 02 · the apology</span>
+    </nav>
+
+    <div class="headline">
+      <span class="headline-text">What I Should've</span>
+      <span class="headline-text italic">Said</span>
+      <div class="headline-sub">instead of letting frustration speak for me</div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">◆</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="body-text">
+      <p>I've replayed that conversation in my head more times than I can count.<br>
+      And honestly?<br>
+      There were a thousand better ways I could've handled it.</p>
+
+      <p>Maybe I was frustrated.<br>
+      Maybe I felt unheard.<br>
+      Maybe I was tired, overthinking, irritated, or emotionally overwhelmed.<br>
+      But none of that changes one simple thing:<br>
+      <em>I still hurt you with the way I spoke.</em></p>
+
+      <div class="rule"><div class="rule-line"></div><div class="rule-dot"></div><div class="rule-line"></div></div>
+
+      <p>I think somewhere in the middle of trying to explain myself,<br>
+      I stopped paying attention to how my words would actually feel to you.<br>
+      And that's on me.</p>
+
+      <p>Some of the things I said sounded cold.<br>
+      Some sounded dismissive.<br>
+      Some probably made you feel like your emotions were a burden instead of something safe to express.<br>
+      And that's the last thing I ever wanted you to feel around me.</p>
+
+      <div class="rule"><div class="rule-line"></div><div class="rule-dot"></div><div class="rule-line"></div></div>
+
+      <p>The truth is...<br>
+      I wasn't angry because I hated talking to you.<br>
+      I was angry because <em>I care too much sometimes and don't always know how to express it correctly.</em><br>
+      And instead of communicating calmly, I reacted emotionally.</p>
+
+      <p>You didn't deserve sarcasm.<br>
+      You didn't deserve attitude.<br>
+      And you definitely didn't deserve to feel like I was trying to "win" instead of understand.</p>
+    </div>
+
+    <div class="quote-block">
+      <div class="quote-text">"I should've spoken softer.<br>Especially to someone I love this much."</div>
+    </div>
+
+    <div class="btn-wrapper">
+      <a href="understand-you.html" class="primary-btn" id="continueBtn">
+        <span>there's more i need to tell you</span>
+        <div class="btn-arrow"></div>
+      </a>
+    </div>
+
+    <div class="footnote">written with guilt, love & a promise to do better</div>
+
+  </div>
+</div>
+
+<script>
+  // Only simple navigation — no custom cursor, no canvas, no tilt, no fancy animations
+  const continueBtn = document.getElementById('continueBtn');
+  if (continueBtn) {
+    continueBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = continueBtn.getAttribute('href');
+    });
+  }
+
+  const backBtn = document.querySelector('.back-btn');
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = backBtn.getAttribute('href');
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>everything i couldn't say · for riddhima</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #05030f;
+    --bg-soft: #0a0720;
+    --rose: #e6a4bc;
+    --rose-deep: #c97b99;
+    --gold: #d8b56e;
+    --text-primary: #f2edf0;
+    --text-secondary: #b9a9b3;
+    --border-glow: rgba(230, 164, 188, 0.2);
+    --modal-bg: rgba(10, 7, 32, 0.96);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* veil */
+  .veil {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    pointer-events: none;
+    animation: liftVeil 1.2s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
+
+  @keyframes liftVeil {
+    0% { opacity: 1; backdrop-filter: blur(12px); }
+    100% { opacity: 0; visibility: hidden; backdrop-filter: blur(0); }
+  }
+
+  /* canvas bg */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .main {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+  }
+
+  .container {
+    max-width: 880px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.2s forwards;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 8vw, 5.2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    background: linear-gradient(120deg, var(--text-primary), var(--rose), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 0.3s forwards;
+  }
+
+  .confession-card {
+    background: rgba(10, 7, 32, 0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    border: 1px solid rgba(230, 164, 188, 0.12);
+    padding: 2.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 25px 40px -20px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease;
+  }
+
+  .confession-card:hover {
+    border-color: rgba(230, 164, 188, 0.28);
+  }
+
+  .confession-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .confession-text p {
+    margin-bottom: 1.4rem;
+  }
+
+  .confession-text strong {
+    color: var(--rose);
+    font-weight: 700;
+  }
+
+  .confession-text em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem auto;
+    width: 180px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-deep), transparent);
+  }
+
+  .divider-symbol {
+    font-size: 0.8rem;
+    color: var(--rose-deep);
+    letter-spacing: 4px;
+  }
+
+  .emotional-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 500;
+    font-style: italic;
+    text-align: center;
+    color: var(--rose);
+    margin: 2rem 0;
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 0.6s forwards;
+  }
+
+  .supporting-text {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin: 1.5rem auto;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.8s forwards;
+  }
+
+  .button-group {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 1s forwards;
+  }
+
+  .btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    border-radius: 48px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, rgba(230, 164, 188, 0.12), rgba(216, 181, 110, 0.08));
+    border: 1px solid rgba(230, 164, 188, 0.35);
+    color: var(--text-primary);
+  }
+
+  .btn-primary:hover {
+    border-color: var(--rose);
+    color: var(--rose);
+    transform: translateY(-2px);
+    background: rgba(230, 164, 188, 0.05);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(230, 164, 188, 0.2);
+    color: var(--text-secondary);
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(230, 164, 188, 0.5);
+    color: var(--rose);
+    transform: translateY(-2px);
+  }
+
+  .footer {
+    margin-top: 3.5rem;
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #5d4a56;
+    border-top: 1px solid rgba(125, 90, 110, 0.2);
+    padding-top: 2rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  /* MODAL — premium, no blinking */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 3, 15, 0.85);
+    backdrop-filter: blur(16px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-container {
+    background: rgba(10, 7, 32, 0.98);
+    border-radius: 32px;
+    border: 1px solid rgba(230, 164, 188, 0.25);
+    max-width: 500px;
+    width: 90%;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.active .modal-container {
+    transform: scale(1);
+  }
+
+  .modal-container h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--rose);
+    margin-bottom: 1rem;
+  }
+
+  .modal-message {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 1.5rem 0;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .modal-btn {
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .modal-btn-yes {
+    background: rgba(230, 164, 188, 0.15);
+    border: 1px solid rgba(230, 164, 188, 0.5);
+    color: var(--rose);
+  }
+
+  .modal-btn-yes:hover {
+    background: rgba(230, 164, 188, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .modal-btn-no {
+    background: transparent;
+    border: 1px solid rgba(230, 164, 188, 0.2);
+    color: var(--text-secondary);
+  }
+
+  .modal-btn-no:hover {
+    border-color: rgba(230, 164, 188, 0.5);
+    color: var(--rose);
+  }
+
+  .close-modal {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: #5d4a56;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 760px) {
+    .main { padding: 3rem 1.2rem; }
+    .confession-card { padding: 1.6rem; }
+    .btn { width: 100%; max-width: 260px; text-align: center; }
+    .button-group { flex-direction: column; align-items: center; gap: 1rem; }
+    .modal-container { padding: 1.8rem; }
+  }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: #0a0720; }
+  ::-webkit-scrollbar-thumb { background: var(--rose-deep); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="veil"></div>
+<canvas id="bg-canvas"></canvas>
+
+<div class="main">
+  <div class="container">
+    <div class="badge">everything i couldn't say</div>
+    <h1>the longest confession<br>i've ever written</h1>
+
+    <div class="confession-card">
+      <div class="confession-text">
+        <p>I know a website can't magically fix everything. But this is how I show love — <strong>working behind the scenes, in your absence</strong>. Building something that holds my feelings when my voice fails. Making things for you, doing things for you quietly, without even telling you sometimes… that's always been my way of loving.</p>
+
+        <p>I woke up at 7 AM today. Actually, I asked my father to wake me up at 6:30 because I wanted to work on this for you. And I've been working on this website ever since. I literally just took a small break to go to the hospital and came back again. I even accidentally sent you the website link before it was ready, so I deleted it immediately 😭</p>
+
+        <p>And yeah… it might've felt like I slept and didn't care, but I really didn't. I haven't properly slept at all. Maybe like an hour max. The entire time, I've just been thinking about us, thinking about everything, replaying every conversation in my head while trying to build this.</p>
+
+        <p>I left last time because I was 101% sure that if I stayed, I would end up saying something even worse. Something you'd misunderstand in a way I never even intended. And that scared me. Because when I'm angry or frustrated, my words stop sounding like my heart. I end up saying things I don't mean, and I know how much damage words can do once they leave your mouth.</p>
+
+        <p>That's why I usually go silent. Not because I don't care, but because I care too much and get scared of hurting the person I'm talking to. But then that silence becomes another problem, because the things I actually want to say never reach you. And honestly, I'm bad at communicating my real feelings in that exact moment. Not because I don't have feelings, but because I feel too much at once and everything gets messed up in my head.</p>
+
+        <p>And if you really think about it… we never truly fought in person. It was always over text. Because text removes everything that matters — your face, your voice, your eyes, your presence. When I'm with you, everything inside me calms down. There's just something about you. Maybe not something different about you as a person, maybe it's just the way I see you differently from everyone else.</p>
+
+        <p>At home, my mood is usually already fucked up. I'm around my father, my grandparents, my brothers — and they aren't like Siri at all 😭 So sometimes all that frustration, all that pressure, all that anger just ends up coming out on you. And that's unfair. It's wrong. I know it is. I genuinely do. You never deserved that.</p>
+
+        <p>I think the truth is… I tried to do something different this time. Instead of staying silent, I tried expressing everything exactly when I was frustrated and angry. I thought maybe finally saying everything out loud would fix things. But I failed miserably 😭 And honestly, I already knew I probably would, because humans say things they don't mean when they're angry, and I'm human too.</p>
+
+        <p>So maybe my old way was actually better — writing everything down in my notes app first, waiting until I'm calm, and then talking to you gently instead of emotionally exploding and hurting you accidentally. I'll work on that. I promise I will.</p>
+
+        <p>But Riddhima… after everything, I still want this. I still want us. I've genuinely never wanted something to work this badly before. But this time, I do. And I know I'll make it work. No — WE will make it work. We are not giving up on each other this easily.</p>
+
+        <p>Now that you've finally read everything I needed you to know… I just need you to know one more thing:</p>
+
+        <p><strong>I love you.</strong></p>
+
+        <p>And no matter how badly I communicate sometimes, no matter how messy my mind gets, no matter how frustrated or tired or broken I am — my love for you has never been fake for even a second.</p>
+
+        <p>I'll keep loving you in the quiet ways too. In the effort. In the work behind the scenes. In waking up early just to build something for you. In fixing things. In staying. In trying again.</p>
+
+        <p>So yeah… I'm gonna take a small nap right now because I genuinely haven't slept 😭</p>
+
+        <p>But when I wake up, I still want us.</p>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">✧</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="emotional-quote">
+      every word, every sleepless hour —<br>it's all for you.
+    </div>
+
+    <div class="supporting-text">
+      You deserve someone who stays even when his mind is a storm.<br>
+      I want to be that person. For you. Always.
+    </div>
+
+    <div class="button-group">
+      <button class="btn btn-primary" id="tryAgainBtn">can we try again?</button>
+    </div>
+
+    <div class="footer">
+      made with 7am mornings, broken sleep, and a heart that refuses to give up
+    </div>
+  </div>
+</div>
+
+<!-- Modal overlay for Yes/No choices -->
+<div class="modal-overlay" id="choiceModal">
+  <div class="modal-container">
+    <h3>rid...</h3>
+    <div class="modal-message" id="modalMessage">
+      Do you really want to try again with me?
+    </div>
+    <div class="modal-buttons" id="choiceButtons">
+      <button class="modal-btn modal-btn-yes" id="modalYes">Yes</button>
+      <button class="modal-btn modal-btn-no" id="modalNo">No</button>
+    </div>
+    <button class="close-modal" id="closeModalBtn">close</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    // —————— PREMIUM BACKGROUND CANVAS (subtle depth) ——————
+    const canvas = document.getElementById('bg-canvas');
+    if(canvas) {
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let time = 0;
+      
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      
+      const blobs = [
+        { x: 0.2, y: 0.3, rad: 0.5, hue: 330, speed: 0.002 },
+        { x: 0.8, y: 0.6, rad: 0.45, hue: 280, speed: 0.0018 },
+        { x: 0.5, y: 0.9, rad: 0.4, hue: 310, speed: 0.0022 },
+        { x: 0.9, y: 0.2, rad: 0.35, hue: 350, speed: 0.0025 }
+      ];
+      
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        const grad = ctx.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, '#05030f');
+        grad.addColorStop(1, '#0a0720');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+        
+        for (let b of blobs) {
+          const xOff = Math.sin(time * b.speed) * 0.03 * width;
+          const yOff = Math.cos(time * b.speed * 0.8) * 0.02 * height;
+          const cx = b.x * width + xOff;
+          const cy = b.y * height + yOff;
+          const rad = b.rad * Math.min(width, height) * 0.7;
+          const orbGrad = ctx.createRadialGradient(cx, cy, rad * 0.2, cx, cy, rad);
+          orbGrad.addColorStop(0, `hsla(${b.hue}, 45%, 18%, 0.12)`);
+          orbGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = orbGrad;
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.beginPath();
+          ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalCompositeOperation = 'source-over';
+        time += 0.008;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+    
+    // —————— MODAL LOGIC ——————
+    const modal = document.getElementById('choiceModal');
+    const modalMessageDiv = document.getElementById('modalMessage');
+    const choiceButtonsDiv = document.getElementById('choiceButtons');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    
+    // Function to show the modal with initial Yes/No choices
+    function showInitialModal() {
+      modalMessageDiv.innerHTML = 'Do you really want to try again with me?';
+      choiceButtonsDiv.innerHTML = `
+        <button class="modal-btn modal-btn-yes" id="modalYes">Yes</button>
+        <button class="modal-btn modal-btn-no" id="modalNo">No</button>
+      `;
+      modal.classList.add('active');
+      
+      document.getElementById('modalYes').addEventListener('click', () => {
+        // On Yes: show sweet, loving popup
+        showLovePopup();
+      });
+      document.getElementById('modalNo').addEventListener('click', () => {
+        // On No: gentle understanding message
+        showSadPopup();
+      });
+    }
+    
+    function showLovePopup() {
+      modalMessageDiv.innerHTML = `
+        <strong style="font-size:1.2rem; color:#e6a4bc;">I love you infinitely.</strong><br><br>
+        You are my favorite thought at 3am, the reason I wake up early, the person I'd rebuild everything for. <br><br>
+        Every clumsy word, every mistake — none of it changes how much you mean to me. <br><br>
+        Let's write a softer story. Together. <br><br>
+        <span style="font-size:0.85rem; color:#d8b56e;">— forever yours, always trying —</span>
+      `;
+      choiceButtonsDiv.innerHTML = `
+        <button class="modal-btn modal-btn-yes" id="modalFinalYes">I love you too</button>
+      `;
+      const finalYes = document.getElementById('modalFinalYes');
+      if (finalYes) {
+        finalYes.addEventListener('click', () => {
+          modal.classList.remove('active');
+          // optional: redirect to a final beautiful page or stay
+          alert("💗 Thank you. I'll never stop trying for us. 💗");
+        });
+      }
+    }
+    
+    function showSadPopup() {
+      modalMessageDiv.innerHTML = `
+        <span style="font-size:1.2rem;">I understand.</span><br><br>
+        Maybe the timing isn't right, or maybe I need to grow more. <br><br>
+        But know this: I'll keep loving you from a distance, quietly,<br> 
+        hoping that one day you'll feel ready again.<br><br>
+        <span style="font-size:0.85rem;">— I'll wait, if you ever change your mind —</span>
+      `;
+      choiceButtonsDiv.innerHTML = `
+        <button class="modal-btn modal-btn-yes" id="modalFinalClose">Thank you for being honest</button>
+      `;
+      const finalClose = document.getElementById('modalFinalClose');
+      if (finalClose) {
+        finalClose.addEventListener('click', () => {
+          modal.classList.remove('active');
+        });
+      }
+    }
+    
+    // Close modal with close button
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+    }
+    
+    // Trigger modal when "can we try again?" is clicked
+    const tryAgainBtn = document.getElementById('tryAgainBtn');
+    if (tryAgainBtn) {
+      tryAgainBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showInitialModal();
+      });
+    }
+    
+    // Close modal when clicking outside (optional, premium touch)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  })();
+</script>
+</body>
+</html>

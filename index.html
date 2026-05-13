@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>for my woman · home of my heart</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #05020a;
+    --rose: #e693ae;
+    --rose-glow: #f1b6cc;
+    --gold: #dbb87c;
+    --text: #f1eaf3;
+    --muted: #c7b8ca;
+    --card-bg: rgba(12, 8, 32, 0.55);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* simple static background – no distracting animations */
+  .static-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(circle at 30% 20%, #0a061c, #020005 80%);
+  }
+
+  /* subtle grain texture (kept for texture but no animation) */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* veil entrance — cinematic, one-time only */
+  .veil {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #0a0618, #020005);
+    z-index: 9999;
+    pointer-events: none;
+    animation: lift 1.1s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  }
+  @keyframes lift {
+    0% { opacity: 1; backdrop-filter: blur(8px); }
+    100% { opacity: 0; visibility: hidden; backdrop-filter: blur(0); }
+  }
+
+  /* side accents — minimalistic, static */
+  .accent-left {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 20;
+    opacity: 0;
+    animation: fadeSlide 0.7s ease 1s forwards;
+  }
+  .accent-left .line {
+    width: 1px;
+    height: 70px;
+    background: linear-gradient(transparent, var(--rose), var(--gold), transparent);
+  }
+  .accent-left .dot {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 6px var(--gold);
+  }
+  .accent-right {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    writing-mode: vertical-rl;
+    font-size: 0.65rem;
+    letter-spacing: 6px;
+    font-family: monospace;
+    color: rgba(230, 147, 174, 0.3);
+    z-index: 20;
+    opacity: 0;
+    animation: fadeSlide 0.7s ease 1.2s forwards;
+  }
+  @keyframes fadeSlide {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(12px); }
+  }
+
+  /* main container */
+  .main {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.8rem;
+  }
+  .card {
+    max-width: 860px;
+    width: 100%;
+    background: transparent;
+    /* no 3D transforms, no tilt */
+  }
+
+  /* label */
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: rise 0.7s ease 0.2s forwards;
+  }
+  .label::before, .label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose), transparent);
+  }
+
+  /* headline reveals (smooth but not overdone) */
+  .line-mask { overflow: hidden; }
+  .hero {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    transform: translateY(110%);
+    animation: reveal 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+  }
+  .hero.italic {
+    font-style: italic;
+    color: var(--rose-glow);
+    animation-delay: 0.15s;
+  }
+  @keyframes reveal {
+    to { transform: translateY(0); }
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+  }
+
+  /* divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 2rem 0 1.8rem;
+    opacity: 0;
+    animation: rise 0.6s ease 0.6s forwards;
+  }
+  .divider hr {
+    flex: 1;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,147,174,0.4), var(--gold), transparent);
+  }
+  .divider span {
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 5px;
+  }
+
+  /* body text */
+  .body-text {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--muted);
+    opacity: 0;
+    animation: rise 0.7s ease 0.8s forwards;
+  }
+  .body-text p {
+    margin-bottom: 1.4rem;
+  }
+  .body-text strong {
+    color: var(--rose);
+    font-weight: 600;
+  }
+  .body-text em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--rose-glow);
+    font-weight: 500;
+  }
+
+  /* quote box */
+  .quote-box {
+    margin: 2.2rem 0;
+    padding: 1.8rem 2rem;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border-left: 2px solid var(--rose);
+    border-radius: 0 24px 24px 0;
+    opacity: 0;
+    animation: rise 0.6s ease 1s forwards;
+  }
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--rose-glow);
+    letter-spacing: -0.2px;
+  }
+
+  /* button — clean, no crazy effects */
+  .btn-wrapper {
+    margin-top: 2.8rem;
+    opacity: 0;
+    animation: rise 0.6s ease 1.2s forwards;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(20, 12, 38, 0.65);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(230, 147, 174, 0.45);
+    padding: 1rem 2.5rem;
+    border-radius: 80px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--rose);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(30, 20, 48, 0.8);
+    transform: scale(1.01);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  }
+  .btn-arrow {
+    width: 28px;
+    height: 1.5px;
+    background: currentColor;
+    position: relative;
+    transition: width 0.2s ease;
+  }
+  .btn-arrow::after {
+    content: "";
+    position: absolute;
+    right: -4px;
+    top: -5px;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid currentColor;
+    border-top: 1.5px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .btn:hover .btn-arrow {
+    width: 38px;
+  }
+
+  .footnote {
+    margin-top: 3.8rem;
+    text-align: center;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: #7f6070;
+    border-top: 1px solid rgba(127, 96, 112, 0.2);
+    padding-top: 2rem;
+    opacity: 0;
+    animation: rise 0.6s ease 1.5s forwards;
+  }
+
+  @media (max-width: 760px) {
+    .accent-left, .accent-right { display: none; }
+    .btn { width: 100%; justify-content: center; }
+    .main { padding: 2rem 1rem; }
+    .quote-box { padding: 1.2rem; }
+  }
+
+  ::-webkit-scrollbar { width: 2px; }
+  ::-webkit-scrollbar-track { background: #05020a; }
+  ::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="veil"></div>
+<div class="static-bg"></div>
+<div class="grain"></div>
+
+<div class="accent-left">
+  <div class="line"></div>
+  <div class="dot"></div>
+  <div class="line"></div>
+</div>
+<div class="accent-right">✦ R I D D H I M A ✦</div>
+
+<div class="main">
+  <div class="card">
+    <div class="label">for my woman, with everything</div>
+
+    <div class="line-mask"><span class="hero">Before you leave this page,</span></div>
+    <div class="line-mask"><span class="hero italic">stay a little longer?</span></div>
+
+    <div class="divider">
+      <hr><span>✧  forever  ✧</span><hr>
+    </div>
+
+    <div class="body-text">
+      <p>I know things feel weird right now. And I know I messed up in ways that made you question everything, maybe even us. But Riddhima, I swear I'm not ready to lose you. I don't think I ever will be.</p>
+
+      <p>You matter to me in ways I don't even know how to explain properly. Like… even on normal days, somehow you're the first thing on my mind. Your laugh, your voice, the way you say random things, the way you care without even realizing it, all of it stays with me. You made my life feel softer without even trying.</p>
+
+      <p>And yeah, maybe trust feels damaged right now. Maybe my words weren't enough when you needed them to be. But I don't want us to end over a moment when I still see forever in you.</p>
+
+      <p>I'm not asking you to magically forget everything or pretend nothing happened. I'm just asking you not to shut the door on me yet. Give me the chance to prove myself properly. Not through big speeches or fake promises, but through consistency. Through effort. Through being there every single day.</p>
+
+      <p>Because my love for you isn't temporary. It isn't just something I say when things are good. It's in the small things too. In the way I think about you constantly. In the way I want to fix things instead of walking away. In the way losing you genuinely scares me.</p>
+
+      <p>You once became my comfort so naturally that now even silence feels different without you in it.</p>
+
+      <p>And maybe I'm not perfect at expressing things. Maybe I overthink, mess up, say things wrong sometimes. But one thing I'm completely sure about is this <strong>I love you genuinely. Deeply. In the calmest and realest way possible.</strong></p>
+
+      <p>So before you decide this is the end… just remember that there's someone here willing to fight for you, choose you, and love you even on the difficult days.</p>
+
+      <p>And if you let me, I'll spend every day making sure you never have to question how much you mean to me again.</p>
+    </div>
+
+    <div class="quote-box">
+      <div class="quote-text">“My love for you isn't temporary, it's the most permanent thing I've ever felt.”</div>
+    </div>
+
+    <div class="btn-wrapper">
+      <a href="confession.html" class="btn" id="navBtn">
+        <span>let me say the rest</span>
+        <div class="btn-arrow"></div>
+      </a>
+    </div>
+
+    <div class="footnote">made with everything i still have · for the one i can't let go</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Clean and minimal — only button ripple effect (subtle, optional professional touch)
+    // No custom cursor, no 3D tilt, no particle animations, no continuous canvas loops
+    // We keep a small elegant ripple on button click for feedback, but no distracting movement
+    const navButton = document.getElementById('navBtn');
+    if (navButton) {
+      navButton.addEventListener('click', (e) => {
+        // gentle ripple effect that doesn't overwhelm
+        const ripple = document.createElement('span');
+        ripple.style.position = 'absolute';
+        ripple.style.width = '8px';
+        ripple.style.height = '8px';
+        ripple.style.background = 'rgba(219,184,124,0.6)';
+        ripple.style.borderRadius = '50%';
+        ripple.style.left = (e.clientX - navButton.getBoundingClientRect().left - 4) + 'px';
+        ripple.style.top = (e.clientY - navButton.getBoundingClientRect().top - 4) + 'px';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.animation = 'rippleWave 0.45s ease-out forwards';
+        navButton.style.position = 'relative';
+        navButton.style.overflow = 'hidden';
+        navButton.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 500);
+      });
+    }
+
+    // Add keyframe for ripple if not already present
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = `
+      @keyframes rippleWave {
+        0% { transform: scale(0); opacity: 0.7; }
+        100% { transform: scale(32); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // Optional: smooth scroll behavior for any internal anchor (just for better UX)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === "#") return;
+        const targetElem = document.querySelector(targetId);
+        if (targetElem) {
+          e.preventDefault();
+          targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
